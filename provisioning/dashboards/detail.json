@@ -1,0 +1,19 @@
+{
+  "uid": "hmi-detail-0001",
+  "title": "HMI detail",
+  "tags": ["hmi"],
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "HMI detail (internal link target)",
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "# HMI detail\n\nThis page is the **internal link** target. You arrived here by clicking the *Pump* cell on the **HMI demo dashboard** — the navigation happened in-app (SPA route change), exactly like clicking an item in the left navigation pane (no new tab, no full reload).\n\n[← Back to HMI demo dashboard](/d/a538aeff-5a8a-42a5-901c-938d896fdd6f)"
+      }
+    }
+  ]
+}

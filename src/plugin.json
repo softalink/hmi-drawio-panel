@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "HMI draw.io",
+  "id": "softalink-hmidrawio-panel",
+  "info": {
+    "keywords": ["panel", "flowchart", "diagram", "drawio", "mxgraph", "hmi", "scada", "synoptic"],
+    "description": "Render draw.io / mxGraph diagrams and drive cell styling (color, stroke, font) from Grafana metrics. React rewrite of grafana-flowcharting for Grafana 13 with draw.io 30.",
+    "author": {
+      "name": "Softalink LLC"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [
+      { "name": "Repository", "url": "https://github.com/softalink/hmi-drawio-panel" },
+      { "name": "Report an issue", "url": "https://github.com/softalink/hmi-drawio-panel/issues" },
+      { "name": "License", "url": "https://github.com/softalink/hmi-drawio-panel/blob/main/LICENSE" }
+    ],
+    "screenshots": [
+      { "name": "Synoptic overview", "path": "img/screenshots/overview.png" },
+      { "name": "Rule editor", "path": "img/screenshots/editor.png" }
+    ],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=13.0.0",
+    "plugins": []
+  }
+}

@@ -1,0 +1,12 @@
+services:
+  grafana:
+    extends:
+      file: .config/docker-compose-base.yaml
+      service: grafana
+    # The plugin requires Grafana >= 13 (plugin.json grafanaDependency). The
+    # managed base defaults to an older version, so pin a compatible one here
+    # to keep `docker compose up` working from scratch with no env vars
+    # (override with GRAFANA_VERSION=... if needed).
+    build:
+      args:
+        grafana_version: ${GRAFANA_VERSION:-13.0.1}
