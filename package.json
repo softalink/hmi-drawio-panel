@@ -1,6 +1,6 @@
 {
   "name": "hmi-drawio-panel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SCADA/HMI panel for Grafana: render draw.io diagrams and drive cell styling from metrics",
   "scripts": {
     "build": "webpack -c ./webpack.config.ts --env production",
@@ -65,6 +65,9 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.0.5"
   },
   "dependencies": {
     "@emotion/css": "11.10.6",

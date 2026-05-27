@@ -1,5 +1,5 @@
 import { DataFrame, getFieldDisplayName, reduceField, ReducerID, FieldType, dateTimeFormat, getValueFormat } from '@grafana/data';
-import { getTemplateSrv } from '@grafana/runtime';
+import { getTemplateSrv, locationService } from '@grafana/runtime';
 
 import { Rule, Aggregation, Comparator, EventMethod, Flowchart, MapOptions, Threshold } from './types';
 import {
@@ -382,7 +382,7 @@ function applyLinks(graph: any, res: RuleResult, cells: any[]): void {
         // template service unavailable (e.g. tests); use the raw url
       }
       if (m.params) {
-        const sp = new URLSearchParams(window.location.search);
+        const sp = locationService.getSearch();
         const from = sp.get('from');
         const to = sp.get('to');
         if (from || to) {

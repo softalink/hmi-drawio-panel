@@ -592,7 +592,8 @@ const SVGNS = 'http://www.w3.org/2000/svg';
 function navigateInternal(href: string): void {
   let path = href;
   try {
-    const u = new URL(href, window.location.origin);
+    // Synthetic base so relative hrefs parse; absolute hrefs ignore the base.
+    const u = new URL(href, 'http://_/');
     path = u.pathname + u.search + u.hash;
   } catch (e) {
     // leave href as-is if it cannot be parsed
@@ -601,11 +602,7 @@ function navigateInternal(href: string): void {
   if (sub && path.startsWith(sub)) {
     path = path.slice(sub.length) || '/';
   }
-  try {
-    locationService.push(path);
-  } catch (e) {
-    window.location.assign(href);
-  }
+  locationService.push(path);
 }
 
 // Flag the anchor external vs internal: external opens a new tab via the browser;
@@ -839,19 +836,15 @@ export function openDrawioEditor(
   const id = `${Date.now()}`;
   const base = (editorUrl || DEFAULT_EDITOR_URL).replace(/\/$/, '');
   const url = `${base}/?embed=1&spin=1&libraries=1&ui=${theme}&ready=fc-${id}&src=grafana`;
-  const win = window.open(url, 'HMI draw.io Editor', 'width=1280,height=720');
-  if (!win) {
-    throw new Error('Popup blocked — allow popups for this site to edit the diagram');
-  }
+  // noopener,noreferrer prevents tab-nabbing; with noopener the returned handle
+  // is null by design, so we reply to the editor via event.source on the ready
+  // message instead of a saved reference. Cannot distinguish "popup blocked"
+  // from "opened successfully" — user must allow popups for this site.
+  window.open(url, 'HMI draw.io Editor', 'noopener,noreferrer,width=1280,height=720');
 
   let posted = false;
   const cleanup = () => {
     window.removeEventListener('message', handler);
-    try {
-      win.close();
-    } catch (e) {
-      // ignore
-    }
   };
   const handler = (event: MessageEvent) => {
     const data = event.data;
@@ -859,9 +852,9 @@ export function openDrawioEditor(
       return;
     }
     if (data.substring(0, 3) === 'fc-') {
-      if (data === `fc-${id}`) {
+      if (data === `fc-${id}` && event.source) {
         const origin = event.origin && event.origin !== 'null' ? event.origin : '*';
-        win.postMessage(xml, origin);
+        (event.source as WindowProxy).postMessage(xml, origin);
         posted = true;
       }
       return;

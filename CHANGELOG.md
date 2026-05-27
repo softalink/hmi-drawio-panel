@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.1 (2026-05-26)
+
+### Fixed — plugincheck2 scan findings (v1.0.0)
+
+- **serialize-javascript HIGH (GHSA-5c6j-r48x-rmvq):** pinned transitive dev dep
+  to `^7.0.5` via npm `overrides`.
+- **code-rules-window-open-without-noopener (`src/drawio.ts`):** the editor popup
+  now opens with `noopener,noreferrer`; reply path switched to
+  `event.source.postMessage` since the WindowProxy handle is null with noopener.
+  Programmatic `win.close()` is no longer possible — the user closes the editor
+  window manually.
+- **code-rules-direct-window-location-access (`src/rules.ts`):** replaced
+  `new URLSearchParams(window.location.search)` with
+  `locationService.getSearch()` from `@grafana/runtime`.
+- **`src/drawio.ts` navigateInternal:** removed remaining `window.location.origin`
+  and `window.location.assign` calls (not flagged on this scan but same rule).
+
 ## 1.0.0 (2026-05-25)
 
 Initial release.
