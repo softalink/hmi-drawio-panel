@@ -25,6 +25,12 @@ jobs:
 
       - uses: grafana/plugin-actions/build-plugin@build-plugin/v1.2.0
         with:
-          policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+          # Signing is gated on `policy_token != ''`. The token currently returns
+          # 409 InvalidArgument until grafana.com approves the catalog submission,
+          # which would halt the workflow before the attestation step. Leave the
+          # input empty to skip signing — attestation runs independently. Restore
+          # `policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}` once the
+          # plugin is approved.
+          policy_token: ''
           attestation: true
           node-version: '24'
