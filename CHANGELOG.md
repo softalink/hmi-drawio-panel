@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.2 (2026-05-26)
+
+### Changed
+
+- **Build provenance:** the release artifact is now built via GitHub Actions
+  (`.github/workflows/release.yml`) using `grafana/plugin-actions/build-plugin`
+  with `attestation: true`. A signed SLSA build provenance attestation is
+  attached to the release, resolving the `no-provenance-attestation`
+  plugincheck2 finding. No source code changes.
+
 ## 1.0.1 (2026-05-26)
 
 ### Fixed — plugincheck2 scan findings (v1.0.0)
